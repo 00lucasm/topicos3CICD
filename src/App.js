@@ -1,25 +1,19 @@
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useMemo } from 'react'
 import {
   Container,
-  Title,
-  Count,
-  LabelButton,
   Input,
   Label,
-  ContainInput,
   ContainForm,
   ButtonSearch,
   TextButton,
   Search,
 } from './styles'
-import { Button } from './components'
 import { useForm } from "react-hook-form";
-import axios from 'axios';
 import useFetch from 'use-http'
 
 const App = () => {
   // lidando com formularios
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, watch } = useForm();
 
 
   const {
@@ -27,12 +21,11 @@ const App = () => {
   } = useFetch('https://pokeapi.co/api/v2/pokemon', {}, [])
 
   const {
-    get, loading: loadingGet, error: errorGet, data: pokemon
+    error: errorGet, data: pokemon
   } = useFetch('https://pokeapi.co/api/v2/pokemon')
 
 
   const onSubmit = async form => {
-    const response = await get(`/${form.nome}`)
     console.log({ errorGet, pokemon })
   }
 
@@ -42,11 +35,11 @@ const App = () => {
 
   const showPokemons = useMemo(
     () => !watch('nome') && !error
-    , [error, watch('nome')])
+    , [error, watch])
 
   const showPokemon = useMemo(
     () => !!watch('nome') && !errorGet && pokemon
-    , [error, watch('nome'), pokemon])
+    , [error, watch, pokemon])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
