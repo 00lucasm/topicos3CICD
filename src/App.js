@@ -38,8 +38,8 @@ const App = () => {
     , [error, watch])
 
   const showPokemon = useMemo(
-    () => !!watch('nome') && !errorGet && pokemon
-    , [error, watch, errorGet, pokemon])
+    () => !!watch('nome') && pokemon
+    , [error, watch, pokemon])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
